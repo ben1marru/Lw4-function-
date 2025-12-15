@@ -28,7 +28,7 @@ switch ($choice) {
         // Ввод текста
         echo "Введите текст (не более 1000 символов): ";
         $text = trim(fgets($handle));
-        echo "Самое часто встречающееся слово: " . mostRecent($text) . "\n";
+        echo "Самое часто встречающееся слово: " . mostFrequentWord($text) . "\n";
         break;
     default:
         echo "Некорректный выбор.\n";
@@ -37,19 +37,18 @@ switch ($choice) {
 
 fclose($handle);
 
-// Funktionen из предыдущего ответа:
 // 1) Функция сортировки строк по алфавиту
-function alphabeticalOrder($str) {
+function alphabeticalOrder(string $str): string {
     $chars = str_split($str);
     sort($chars);
     return implode('', $chars);
 }
 
-// 2) Функция поиска идеального числа
-function findPerfectNumbers($array) {
+// 2) Функция поиска идеальных чисел
+function findPerfectNumbers(array $array): array {
     $perfectNumbers = [];
     foreach ($array as $num) {
-        if ($num <= 0 || !is_int($num)) continue;
+        if ($num <= 0 || !is_int($num)) continue; // дополнительно проверка на Int, хотя в массиве только intval
         $divSum = 0;
         for ($i=1; $i <= $num/2; $i++) {
             if ($num % $i == 0) {
@@ -64,7 +63,7 @@ function findPerfectNumbers($array) {
 }
 
 // 3) Функция поиска наиболее часто встречающегося слова
-function mostRecent($text) {
+function mostFrequentWord(string $text): string {
     if (strlen($text) > 1000) {
         $text = substr($text, 0, 1000);
     }
@@ -78,7 +77,7 @@ function mostRecent($text) {
         }
     }
     $maxCount = 0;
-    $mostFrequentWord = null;
+    $mostFrequentWord = '';
     foreach ($frequency as $word => $count) {
         if ($count > $maxCount) {
             $maxCount = $count;
